@@ -13,9 +13,11 @@ const scrapeData = async ({ slug }) => {
   try {
     await puppeteer.use(StealthPlugin());
     const browser = await puppeteer.launch({
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
       headless: true,
-      defaultViewport: null,
-      executablePath: executablePath(),
+      ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
     await page.goto(`${url}/${slug}`, {
