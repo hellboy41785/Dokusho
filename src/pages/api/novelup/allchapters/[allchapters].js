@@ -1,9 +1,10 @@
 const fs = require("fs");
 
 const puppeteer = require('puppeteer-extra')
-// add stealth plugin and use defaults (all evasion techniques)
+
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const {executablePath} = require('puppeteer')
+
 
 
 const url = `https://www.novelupdates.com/series`;
@@ -15,6 +16,7 @@ const scrapeData = async ({ slug }) => {
       headless: true,
       defaultViewport: null,
       executablePath: executablePath(),
+      userDataDir: './puppeteer-cache',
     });
     const page = await browser.newPage();
     await page.goto(`${url}/${slug}`, {
