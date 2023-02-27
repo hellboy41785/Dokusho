@@ -1,21 +1,27 @@
 const fs = require("fs");
 
-const puppeteer = require('puppeteer-extra')
-
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-const {executablePath} = require('puppeteer')
-
-
+const { executablePath } = require("puppeteer");
 
 const url = `https://www.novelupdates.com/series`;
+let chrome = {};
+let puppeteer;
 
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  // running on the Vercel platform.
+  chrome = require("chrome-aws-lambda");
+  puppeteer = require("puppeteer-extra");
+} else {
+  // running locally.
+  puppeteer = require("puppeteer-extra");
+}
 const scrapeData = async ({ slug }) => {
   try {
     await puppeteer.use(StealthPlugin());
     const browser = await puppeteer.launch({
-      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
+      args: [...chrome.args, '--hide-scrollbars', '--disable-web-security'],
+      defaultViewport: chrome.defaultViewport,
+      executablePath: await chrome.executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
     });
