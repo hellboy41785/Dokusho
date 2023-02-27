@@ -16,7 +16,6 @@ const scrapeData = async ({ slug }) => {
       headless: true,
       defaultViewport: null,
       executablePath: executablePath(),
-      userDataDir: './puppeteer-cache',
     });
     const page = await browser.newPage();
     await page.goto(`${url}/${slug}`, {
