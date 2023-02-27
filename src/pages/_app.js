@@ -9,7 +9,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Head from "next/head";
 
 import { useState } from "react";
-import Dokusho from "../../public/books.png";
 export default function App({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient());
 
