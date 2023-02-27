@@ -22,7 +22,7 @@ const MyList = () => {
         </div>
         {bookMark.length === 0 ? (
           <div>
-            <h1>No Bookmark</h1>
+            <h1 className="text-center h-screen w-full text-4xl">No Bookmark</h1>
           </div>
         ) : (
           <List bookMark={bookMark} />
