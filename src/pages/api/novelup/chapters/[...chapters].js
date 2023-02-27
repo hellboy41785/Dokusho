@@ -19,7 +19,7 @@ const scrapeData = async ({ slug, page }) => {
     };
 
     chapInfo.page = page;
-    //  Tota Page
+    //  Total Page
     const totalPage = $(".digg_pagination ").children("a:last").next().text();
     chapInfo.totalPage =
       totalPage === ""

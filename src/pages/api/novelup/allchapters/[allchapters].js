@@ -39,13 +39,14 @@ const scrapeData = async ({ slug }) => {
 
         chapters.push(chapter);
       });
-
+      
       return chapters;
     });
     const allChapters = {
       slug: slug,
       chapters: items,
     };
+    await browser.close();
     return allChapters;
   } catch (err) {
     console.log("error: " + err.message);

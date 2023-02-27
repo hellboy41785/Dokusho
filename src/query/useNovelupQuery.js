@@ -27,7 +27,7 @@ const fetchReadData = async({id})=>{
   return data;
 }
 const fetchAllChaptersData = async ({slug})=>{
-  const res = await fetch(`/api/novelup/allchapters/${slug}`);
+  const res = await fetch(`/api/novelup/allchapcherrio/${slug}`);
   const data = res.json();
   return data;
 } 
