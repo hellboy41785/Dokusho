@@ -11,23 +11,23 @@ const SideBar = ({ slug, id }) => {
   if (isLoading) return <AllChapterLoader/>;
   if (isError) return <Error />;
   return (
-    <div className="drawer fixed bottom-0">
+    <div className="fixed bottom-0 drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content  flex  items-end pb-2 pl-2">
+      <div className="flex items-end pb-2 pl-2 drawer-content">
         <label
           htmlFor="my-drawer"
-          className=" drawer-button btn btn-circle p-1"
+          className="p-1 drawer-button btn btn-circle"
         >
           <Books size={40} color="#d9d9d9" />
         </label>
       </div>
       <div className="drawer-side ">
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
-        <ul className=" p-4 w-80 bg-base-100 text-base-content overflow-y-scroll text-lg flex flex-col gap-3  scrollbar">
+        <ul className="flex flex-col gap-3 p-4 overflow-y-scroll text-lg w-80 bg-base-100 text-base-content scrollbar">
           {data.chapters.map((chap) => (
             <Link
               href={`/read/${slug}/${chap.id}`}
-              className="w-full p-3 hover:bg-primary rounded-md"
+              className="w-full p-3 rounded-md hover:bg-primary"
               key={chap.id}
               onClick={() =>
                 setUpdateChapter(data.slug, {
