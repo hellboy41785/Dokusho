@@ -17,7 +17,7 @@ const ChapterInfo = ({ slug, page }) => {
   const myList = bookMark?.find((e) => e.id === data.slug)?.ch.chid || null;
 
   return (
-    <div className="overflow-x-auto">
+    <>
       <table className="table w-full text-center">
         {/* head */}
         <thead>
@@ -30,9 +30,11 @@ const ChapterInfo = ({ slug, page }) => {
         <tbody className="">
           {/* row 1 */}
           {data.chapters.length === 0 ? (
-            <div className="flex justify-center">
-              <h1 className="text-2xl p-10">No Chapters</h1>
-            </div>
+            <tr>
+              <td ></td>
+              <td className="p-10 text-2xl">No Chapters</td>
+              <td></td>
+            </tr>
           ) : (
             data.chapters.map((chap) => (
               <tr key={chap.id}>
@@ -59,7 +61,7 @@ const ChapterInfo = ({ slug, page }) => {
           )}
         </tbody>
       </table>
-    </div>
+    </>
   );
 };
 

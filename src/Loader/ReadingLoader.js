@@ -2,16 +2,16 @@ import React from "react";
 
 const ReadingLoader = () => {
   return (
-    <div class="py-1 animate-pulse flex justify-center items-center  w-full h-full flex-col gap-6 p-4">
+    <div className="flex flex-col items-center justify-center w-full h-full gap-6 p-4 py-1 animate-pulse">
       {Array.from({ length: 14 }).map((_, index) => (
-        <div class="flex-1 space-y-6 py-1 w-full max-w-2xl" key={index}>
-          <div class="h-2 bg-slate-700 rounded w-full"></div>
-          <div class="space-y-3">
-            <div class="grid grid-cols-3 gap-4">
-              <div class="h-2 bg-slate-700 rounded col-span-2 w-full"></div>
-              <div class="h-2 bg-slate-700 rounded col-span-1 w-full"></div>
+        <div className="flex-1 w-full max-w-2xl py-1 space-y-6" key={index}>
+          <div className="w-full h-2 rounded bg-slate-700"></div>
+          <div className="space-y-3">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="w-full h-2 col-span-2 rounded bg-slate-700"></div>
+              <div className="w-full h-2 col-span-1 rounded bg-slate-700"></div>
             </div>
-            <div class="h-2 bg-slate-700 rounded w-full"></div>
+            <div className="w-full h-2 rounded bg-slate-700"></div>
           </div>
         </div>
       ))}
