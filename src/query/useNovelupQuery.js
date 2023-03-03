@@ -32,11 +32,6 @@ const fetchAllChaptersData = async ({ slug }) => {
   return data;
 };
 
-const fetchBookMarks = async () => {
-  const res = await fetch("/api/post/bookmark");
-  const data = res.json();
-  return data;
-};
 
 // ...........................................................................
 export const useLatestQuery = () => {
@@ -86,9 +81,4 @@ export const useAllChaptersQuery = ({ slug }) => {
     staleTime: Infinity,
   });
 };
-export const useBookMarksQuery = () => {
-  return useQuery({
-    queryKey: ["bookMarks"],
-    queryFn: () => fetchBookMarks(),
-  });
-};
+
