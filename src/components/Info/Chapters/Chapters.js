@@ -1,20 +1,35 @@
 import { useState } from "react";
 import ChapterInfo from "./ChapterInfo";
 import { useBookMarkStore } from "@/store/useStore";
+import { useBookMarksQuery } from "@/query/useBookMarkQuery";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 const Chapters = ({ slug, totalPage }) => {
   const bookMark = useBookMarkStore((state) => state.bookMark);
+  const { status } = useSession();
+  const { data: bookMarks } = useBookMarksQuery();
   const [page, setPage] = useState("1");
-  const myList = bookMark?.find((e) => e.id === slug)?.ch || null;
+  const myList =
+    status === "unauthenticated"
+      ? null
+      : bookMarks?.find((e) => e.slug === slug)?.chId || null;
+
+  const readingChapter =
+    status === "unauthenticated"
+      ? null
+      : bookMarks?.find((e) => e.slug === slug)?.ch || null
 
   return (
     <>
       <div className="flex justify-between">
         <div className="flex gap-2">
           <h1 className="p-4 rounded bg-primary-focus">Chapters</h1>
-          { myList !== null && (
-            <Link href={`/read/${slug}/${myList.chid}`} className="p-4 rounded bg-primary-focus">
-              Reading : {myList.chap}
+          {(myList !== "0" && myList !== null) && (
+            <Link
+              href={`/read/${slug}/${myList}`}
+              className="p-4 rounded bg-primary-focus"
+            >
+              Reading : {readingChapter}
             </Link>
           )}
         </div>
@@ -41,7 +56,12 @@ const Chapters = ({ slug, totalPage }) => {
         </div>
       </div>
 
-      <ChapterInfo slug={slug} page={page} />
+      <ChapterInfo
+        slug={slug}
+        page={page}
+        bookMarks={bookMarks}
+        status={status}
+      />
     </>
   );
 };

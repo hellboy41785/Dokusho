@@ -2,22 +2,40 @@ import Error from "@/Error/Error";
 import { useAllChaptersQuery } from "@/query/useNovelupQuery";
 import Link from "next/link";
 import { Books } from "phosphor-react";
-import { useBookMarkStore } from "@/store/useStore";
 import AllChapterLoader from "@/Loader/AllChapterLoader";
+import {
+  useUpdateBookMarkQuery,
+  useBookMarksQuery,
+} from "@/query/useBookMarkQuery";
+
+import { useSession } from "next-auth/react";
 
 const SideBar = ({ slug, id }) => {
-  const setUpdateChapter = useBookMarkStore((state) => state.setUpdateChapter);
+  const { status } = useSession();
+  const { data: bookMarks } = useBookMarksQuery();
+  const { mutate: updateBookMark } = useUpdateBookMarkQuery();
   const { data, isLoading, isError } = useAllChaptersQuery({ slug: slug });
-  if (isLoading) return <AllChapterLoader/>;
+  if (isLoading) return <AllChapterLoader />;
   if (isError) return <Error />;
+
+  const myList =
+    status === "unauthenticated"
+      ? null
+      : bookMarks?.find((e) => e.slug === data.slug)?.id || null;
+
+  const handleUpdate = async (value, id) => {
+    updateBookMark({
+      chId: value.id,
+      ch: value.ch,
+      id: id,
+    });
+  };
+
   return (
     <div className="fixed bottom-0 drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="flex items-end pb-2 pl-2 drawer-content">
-        <label
-          htmlFor="my-drawer"
-          className="p-1 drawer-button btn btn-circle"
-        >
+        <label htmlFor="my-drawer" className="p-1 drawer-button btn btn-circle">
           <Books size={40} color="#d9d9d9" />
         </label>
       </div>
@@ -29,12 +47,7 @@ const SideBar = ({ slug, id }) => {
               href={`/read/${slug}/${chap.id}`}
               className="w-full p-3 rounded-md hover:bg-primary"
               key={chap.id}
-              onClick={() =>
-                setUpdateChapter(data.slug, {
-                  chap: chap.ch,
-                  chid: chap.id,
-                })
-              }
+              onClick={() => myList !== null && handleUpdate(chap, myList)}
             >
               <p className={`${chap.id === `${id}/` && "text-yellow-300"}`}>
                 {chap.ch}

@@ -3,8 +3,10 @@ import React from "react";
 import Link from "next/link";
 import { useNovelUpStore } from "@/store/useStore";
 import { useState } from "react";
-import { BookBookmark, House } from "phosphor-react";
+import { BookBookmark, House, User } from "phosphor-react";
+import { signIn, signOut, useSession } from "next-auth/react";
 const Navbar = () => {
+  const { data: session, status } = useSession();
   const setSearchToggle = useNovelUpStore((state) => state.setSearchToggle);
   const [toggle, setToggle] = useState(false);
 
@@ -12,6 +14,23 @@ const Navbar = () => {
     <div className="fixed z-20 gap-2 bottom-2 inset-x-[88%] lg:inset-x-[96%] space-y-2">
       {toggle && (
         <div className="flex flex-col gap-2">
+          {status === "unauthenticated" ? (
+            <User
+              className="p-2 btn btn-circle"
+              size={40}
+              weight="fill"
+              onClick={signIn}
+            />
+          ) : (
+            <User
+              className="p-2 btn btn-circle"
+              size={40}
+              weight="fill"
+              color="#d11010"
+              onClick={signOut}
+            />
+          )}
+
           <Search
             className="p-2 btn btn-circle"
             size={40}

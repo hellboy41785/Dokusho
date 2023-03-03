@@ -7,7 +7,7 @@ const List = ({ bookMark }) => {
     <div className="grid grid-cols-2 lg:grid-cols-5">
       {bookMark.map((book) => (
         <div className="flex flex-col w-full h-full gap-2 p-3" key={book.id}>
-          <Link href={`/${book.id}`}>
+          <Link href={`/${book.slug}`}>
             <img
               className=" rounded-md object-cover w-full min-h-[300px] max-h-[300px] lg:min-h-[400px] lg:max-h-[400px]"
               src={book.img}
@@ -20,12 +20,12 @@ const List = ({ bookMark }) => {
               <h3 className="badge badge-primary">{book.type}</h3>
             </div>
             <div>
-              {book.ch !== 0 && (
+              {book.ch !== "0" && (
                 <Link
                   className="flex btn btn-active btn-secondary"
-                  href={`/read/${book.id}/${book.ch.chid}`}
+                  href={`/read/${book.slug}/${book.chId}`}
                 >
-                  <h1>Reading : {book.ch.chap}</h1>
+                  <h1>Reading : {book.ch}</h1>
                 </Link>
               )}
             </div>

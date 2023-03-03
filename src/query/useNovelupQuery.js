@@ -10,27 +10,35 @@ const fetchInfoData = async ({ slug }) => {
   const data = res.json();
   return data;
 };
-const fetchSearchData = async ({value}) => {
+const fetchSearchData = async ({ value }) => {
   const res = await fetch(`/api/novelup/search/${value}`);
   const data = res.json();
   return data;
 };
 
-const fetchChapterData = async({ slug, page })=>{
+const fetchChapterData = async ({ slug, page }) => {
   const res = await fetch(`/api/novelup/chapters/${slug}/${page}`);
   const data = res.json();
   return data;
-}
-const fetchReadData = async({id})=>{
+};
+const fetchReadData = async ({ id }) => {
   const res = await fetch(`/api/novelup/read/${id}`);
   const data = res.json();
   return data;
-}
-const fetchAllChaptersData = async ({slug})=>{
+};
+const fetchAllChaptersData = async ({ slug }) => {
   const res = await fetch(`/api/novelup/allchapcherrio/${slug}`);
   const data = res.json();
   return data;
-} 
+};
+
+const fetchBookMarks = async () => {
+  const res = await fetch("/api/post/bookmark");
+  const data = res.json();
+  return data;
+};
+
+// ...........................................................................
 export const useLatestQuery = () => {
   return useInfiniteQuery({
     queryKey: ["latest"],
@@ -59,7 +67,7 @@ export const useSearchQuery = ({ value }) => {
 };
 export const useChapterQuery = ({ slug, page }) => {
   return useQuery({
-    queryKey: ["chapter", slug,page],
+    queryKey: ["chapter", slug, page],
     queryFn: () => fetchChapterData({ slug, page }),
     staleTime: Infinity,
   });
@@ -67,14 +75,20 @@ export const useChapterQuery = ({ slug, page }) => {
 export const useReadQuery = ({ id }) => {
   return useQuery({
     queryKey: ["chapter", id],
-    queryFn: () => fetchReadData({ id}),
+    queryFn: () => fetchReadData({ id }),
     staleTime: Infinity,
   });
 };
 export const useAllChaptersQuery = ({ slug }) => {
   return useQuery({
     queryKey: ["allChapters", slug],
-    queryFn: () => fetchAllChaptersData({ slug}),
+    queryFn: () => fetchAllChaptersData({ slug }),
     staleTime: Infinity,
+  });
+};
+export const useBookMarksQuery = () => {
+  return useQuery({
+    queryKey: ["bookMarks"],
+    queryFn: () => fetchBookMarks(),
   });
 };

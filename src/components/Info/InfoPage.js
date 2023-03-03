@@ -1,5 +1,5 @@
 import React from "react";
-import { useInfoQuery } from "@/query/useNovelupQuery";
+import { useInfoQuery,useBookMarksQuery } from "@/query/useNovelupQuery";
 import Error from "@/Error/Error";
 import TopStyle from "./TopStyle/TopStyle";
 import Chapters from "./Chapters/Chapters";

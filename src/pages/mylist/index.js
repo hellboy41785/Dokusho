@@ -1,22 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
-import { useBookMarkStore } from "@/store/useStore";
-// import List from "@/components/MyList/List";
+
+import { useBookMarksQuery } from "@/query/useBookMarkQuery";
+import { useSession } from "next-auth/react";
+
 import Head from "next/head";
-import dynamic from "next/dynamic";
-import { useEffect,useState } from "react";
-const List = dynamic(() => import('@/components/MyList/List'), {
-  ssr: false
-})
+
+
+import Loader from "@/Loader/Loader";
+import Error from "@/Error/Error";
+import List from "@/components/MyList/List";
 
 const MyList = () => {
-  const bookMark = useBookMarkStore((state) => state.bookMark);
-  
-  const [userList, setUserList] = useState([])
-  
-  useEffect(()=>{
-    setUserList(bookMark)
-  },[bookMark])
- 
+  const { status } = useSession();
+  const { data, isLoading, isError } = useBookMarksQuery();
+
+  if (isLoading) return <Loader />;
+  if (isError) return <Error />;
+
   return (
     <>
       <Head>
@@ -32,12 +32,14 @@ const MyList = () => {
         <div className="w-full p-4">
           <h1 className="w-full btn btn-active btn-secondary">My List</h1>
         </div>
-        {userList.length === 0 ? (
+        {data?.length === 0 || status === "unauthenticated" ? (
           <div>
-            <h1 className="w-full h-screen text-4xl text-center">No Bookmark</h1>
+            <h1 className="w-full h-screen text-4xl text-center">
+              No Bookmark
+            </h1>
           </div>
         ) : (
-          <List bookMark={userList} />
+          <List bookMark={data} />
         )}
       </div>
     </>

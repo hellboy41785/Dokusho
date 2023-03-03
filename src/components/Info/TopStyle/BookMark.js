@@ -1,20 +1,33 @@
-import { useBookMarkStore } from "@/store/useStore";
 import { BookmarkSimple } from "phosphor-react";
 
+import { useSession, signIn } from "next-auth/react";
+import {
+  useAddBookMarkQuery,
+  useDeleteBookMarkQuery,
+  useBookMarksQuery,
+} from "@/query/useBookMarkQuery";
+
 const BookMark = ({ data }) => {
-  const bookMark = useBookMarkStore((state) => state.bookMark);
-  const setBookMark = useBookMarkStore((state) => state.setBookMark);
-  const setRemove = useBookMarkStore((state) => state.setRemove);
+  const { status } = useSession();
+  const { data: bookMarks, isLoading } = useBookMarksQuery();
+  const { mutate: addBookMark } = useAddBookMarkQuery();
+  const { mutate: deleteBookMark } = useDeleteBookMarkQuery();
+  if (isLoading) return <></>;
 
-
-  const schema = {
-    title: data.title,
-    id: data.id,
-    type: data.type,
-    ch: 0,
-    img: data.img,
+  const handleBookMark = async (value) => {
+    addBookMark({
+      title: value.title,
+      type: value.type,
+      img: value.img,
+      ch: "0",
+      chId: "0",
+      slug: value.id,
+    });
   };
-  const myList = bookMark?.find((e) => e.id === data.id)?.id || null;
+  const myList =
+    status === "unauthenticated"
+      ? null
+      : bookMarks?.find((e) => e.slug === data.id)?.id || null;
 
   return (
     <div className="flex justify-end">
@@ -23,7 +36,9 @@ const BookMark = ({ data }) => {
           className="cursor-pointer"
           size={40}
           color="#d9d9d9"
-          onClick={() => setBookMark(schema)}
+          onClick={
+            status === "unauthenticated" ? signIn : () => handleBookMark(data)
+          }
         />
       ) : (
         <BookmarkSimple
@@ -31,7 +46,7 @@ const BookMark = ({ data }) => {
           size={40}
           color="#d9d9d9"
           weight="fill"
-          onClick={() => setRemove(data.id)}
+          onClick={() => deleteBookMark({ id: myList })}
         />
       )}
     </div>

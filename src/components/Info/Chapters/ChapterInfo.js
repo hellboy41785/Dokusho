@@ -1,20 +1,36 @@
 import Error from "@/Error/Error";
 import { useChapterQuery } from "@/query/useNovelupQuery";
+import { useUpdateBookMarkQuery, useBookMarksQuery } from "@/query/useBookMarkQuery";
 import Link from "next/link";
-import { useBookMarkStore } from "@/store/useStore";
 import ChapterLoader from "@/Loader/ChapterLoader";
+import { useSession } from "next-auth/react";
 
-const ChapterInfo = ({ slug, page }) => {
-  const setUpdateChapter = useBookMarkStore((state) => state.setUpdateChapter);
-  const bookMark = useBookMarkStore((state) => state.bookMark);
-
+const ChapterInfo = ({ slug, page,bookMarks,status }) => {
+  const { mutate: updateBookMark } = useUpdateBookMarkQuery();
   const { data, isLoading, isError } = useChapterQuery({
     slug: slug,
     page: page,
   });
-  if (isLoading) return <ChapterLoader/>;
+  if (isLoading) return <ChapterLoader />;
   if (isError) return <Error />;
-  const myList = bookMark?.find((e) => e.id === data.slug)?.ch.chid || null;
+
+  const myList =
+    status === "unauthenticated"
+      ? null
+      : bookMarks?.find((e) => e.slug === data.slug)?.id || null;
+
+  const chapId =
+    status === "unauthenticated"
+      ? null
+      : bookMarks?.find((e) => e.slug === data.slug)?.chId || null;
+
+  const handleUpdate = async (value, id) => {
+    updateBookMark({
+      chId: value.id,
+      ch: value.ch,
+      id: id,
+    });
+  };
 
   return (
     <>
@@ -31,7 +47,7 @@ const ChapterInfo = ({ slug, page }) => {
           {/* row 1 */}
           {data.chapters.length === 0 ? (
             <tr>
-              <td ></td>
+              <td></td>
               <td className="p-10 text-2xl">No Chapters</td>
               <td></td>
             </tr>
@@ -43,14 +59,11 @@ const ChapterInfo = ({ slug, page }) => {
                 <td>
                   <Link
                     className={`${
-                      myList === chap.id && "text-yellow-400"
+                      chapId === chap.id && "text-yellow-400"
                     } hover:text-[#5f718d] text-xl`}
                     href={`/read/${slug}/${chap.id}`}
                     onClick={() =>
-                      setUpdateChapter(data.slug, {
-                        chap: chap.ch,
-                        chid: chap.id,
-                      })
+                      myList !== null && handleUpdate(chap, myList)
                     }
                   >
                     {chap.ch}
