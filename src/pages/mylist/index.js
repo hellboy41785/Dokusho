@@ -5,8 +5,7 @@ import { useSession } from "next-auth/react";
 
 import Head from "next/head";
 
-
-import Loader from "@/Loader/Loader";
+import MyListLoader from "@/Loader/MyListLoader";
 import Error from "@/Error/Error";
 import List from "@/components/MyList/List";
 
@@ -14,7 +13,7 @@ const MyList = () => {
   const { status } = useSession();
   const { data, isLoading, isError } = useBookMarksQuery();
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <MyListLoader/>;
   if (isError) return <Error />;
 
   return (

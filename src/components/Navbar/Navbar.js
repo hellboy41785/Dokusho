@@ -5,8 +5,10 @@ import { useNovelUpStore } from "@/store/useStore";
 import { useState } from "react";
 import { BookBookmark, House, User } from "phosphor-react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 const Navbar = () => {
   const { data: session, status } = useSession();
+  const router = useRouter()
   const setSearchToggle = useNovelUpStore((state) => state.setSearchToggle);
   const [toggle, setToggle] = useState(false);
 
@@ -19,7 +21,7 @@ const Navbar = () => {
               className="p-2 btn btn-circle"
               size={40}
               weight="fill"
-              onClick={signIn}
+              onClick={()=>router.push("/auth/signin")}
             />
           ) : (
             <User

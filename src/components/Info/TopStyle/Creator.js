@@ -14,11 +14,17 @@ const Creator = ({ type, data }) => {
           tabIndex={0}
           className="w-full p-2 shadow dropdown-content menu bg-base-100 rounded-box"
         >
-          {data.map((el) => (
-            <li key={el.id}>
-              <a>{el.name}</a>
+          {data.length === 0 ? (
+            <li className="flex justify-center items-center w-full">
+              <a>No {type}</a>
             </li>
-          ))}
+          ) : (
+            data.map((el) => (
+              <li key={el.id}>
+                <a>{el.name}</a>
+              </li>
+            ))
+          )}
         </ul>
       </div>
     </div>
