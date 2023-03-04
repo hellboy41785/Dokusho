@@ -6,9 +6,11 @@ import {
   useDeleteBookMarkQuery,
   useBookMarksQuery,
 } from "@/query/useBookMarkQuery";
+import { useRouter } from "next/router";
 
 const BookMark = ({ data }) => {
   const { status } = useSession();
+  const router = useRouter()
   const { data: bookMarks, isLoading } = useBookMarksQuery();
   const { mutate: addBookMark, isLoading: addisLoading } =
     useAddBookMarkQuery();
@@ -31,7 +33,6 @@ const BookMark = ({ data }) => {
       ? null
       : bookMarks?.find((e) => e.slug === data.id)?.id || null;
 
-  console.log(addisLoading);
 
   return (
     <div className="flex justify-between items-center">
@@ -85,7 +86,7 @@ const BookMark = ({ data }) => {
             color="#d9d9d9"
             onClick={
               status === "unauthenticated"
-                ? signIn
+                ? router.push("/auth/signin")
                 : !addisLoading
                 ? () => handleBookMark(data)
                 : undefined
