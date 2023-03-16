@@ -68,7 +68,6 @@ const ChapterInfo = ({ slug, page, bookMarks, status }) => {
                     onClick={() =>
                       myList !== null && handleUpdate(chap, myList)
                     }
-                    scroll={false}
                   >
                     {chap.ch}
                   </Link>
