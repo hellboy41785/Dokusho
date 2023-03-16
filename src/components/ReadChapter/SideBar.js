@@ -48,6 +48,7 @@ const SideBar = ({ slug, id }) => {
               className="w-full p-3 rounded-md hover:bg-primary"
               key={chap.id}
               onClick={() => myList !== null && handleUpdate(chap, myList)}
+              scroll={false}
             >
               <p className={`${chap.id === `${id}/` && "text-yellow-300"}`}>
                 {chap.ch}

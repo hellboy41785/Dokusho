@@ -1,11 +1,14 @@
 import Error from "@/Error/Error";
 import { useChapterQuery } from "@/query/useNovelupQuery";
-import { useUpdateBookMarkQuery, useBookMarksQuery } from "@/query/useBookMarkQuery";
+import {
+  useUpdateBookMarkQuery,
+  useBookMarksQuery,
+} from "@/query/useBookMarkQuery";
 import Link from "next/link";
 import ChapterLoader from "@/Loader/ChapterLoader";
 import { useSession } from "next-auth/react";
 
-const ChapterInfo = ({ slug, page,bookMarks,status }) => {
+const ChapterInfo = ({ slug, page, bookMarks, status }) => {
   const { mutate: updateBookMark } = useUpdateBookMarkQuery();
   const { data, isLoading, isError } = useChapterQuery({
     slug: slug,
@@ -65,6 +68,7 @@ const ChapterInfo = ({ slug, page,bookMarks,status }) => {
                     onClick={() =>
                       myList !== null && handleUpdate(chap, myList)
                     }
+                    scroll={false}
                   >
                     {chap.ch}
                   </Link>

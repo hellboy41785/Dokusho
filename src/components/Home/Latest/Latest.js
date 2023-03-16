@@ -7,7 +7,7 @@ const Latest = ({ data }) => {
   const [view, setView] = useState(false);
   const setSlug = useNovelUpStore((state) => state.setSlug);
   return (
-    <Link href={`/${data.id}`} className="flex flex-col w-full gap-2 " onClick={()=>setSlug(data.id)}>
+    <Link href={`/${data.id}`} className="flex flex-col w-full gap-2 " onClick={()=>setSlug(data.id)} scroll={false}>
       <div className="relative w-full h-full cursor-pointer">
         <img
           className="object-cover rounded-md w-full min-h-[200px] max-h-[200px]"

@@ -46,7 +46,7 @@ const Navbar = () => {
               weight="fill"
             />
           </Link>
-          <Link href={`/`}>
+          <Link href={`/`} scroll={false}>
             <House
               className="p-2 btn btn-circle"
               size={60}
