@@ -8,10 +8,13 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
+import useScrollRestoration from "@/PreserveScroll/usePreserveScroll";
 
 import { useState } from "react";
-export default function App({ session, Component, pageProps }) {
+export default function App({ session, Component, pageProps,router}) {
   const [queryClient] = useState(() => new QueryClient());
+
+  useScrollRestoration(router);
 
   return (
     <>
