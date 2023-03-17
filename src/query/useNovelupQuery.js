@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
+
 export const fetchLatestData = async ({ page }) => {
   const res = await fetch(`/api/novelup/latest/${page}`);
   const data = res.json();
