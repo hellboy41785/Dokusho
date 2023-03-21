@@ -86,7 +86,7 @@ const BookMark = ({ data }) => {
             color="#d9d9d9"
             onClick={
               status === "unauthenticated"
-                ? router.push("/auth/signin")
+                ?()=> router.push("/auth/signin")
                 : !addisLoading
                 ? () => handleBookMark(data)
                 : undefined

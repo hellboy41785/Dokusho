@@ -32,8 +32,8 @@ const MyList = () => {
           <h1 className="w-full btn btn-active btn-secondary">My List</h1>
         </div>
         {data?.length === 0 || status === "unauthenticated" ? (
-          <div>
-            <h1 className="w-full h-screen text-4xl text-center">
+          <div className="flex w-full items-center justify-center h-[600px]">
+            <h1 className="text-4xl">
               No Bookmark
             </h1>
           </div>
